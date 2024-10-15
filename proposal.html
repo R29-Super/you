@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Sticker & Message Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d403e3;
+      text-align: center;
+    }
+    .container {
+      width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ef04a9;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .sticker {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    .message {
+      font-size: 1.5em;
+      color: #333;
+    }
+    .nav-buttons {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #e6c9e7;
+      color: rgb(224, 129, 213);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005f75;
+    }
+    .form-section {
+      margin-top: 30px;
+      text-align: left;
+    }
+    input[type="text"], textarea {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .responses {
+      margin-top: 30px;
+      text-align: left;
+    }
+    .response {
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio Background -->
+  <audio autoplay loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+   
+
+  <div class="container"> 
+    <img id="sticker" class="sticker" src="awe.jpg" alt="Sticker">
+    <div id="message" class="message">Hai Adelia Vilegas.</div>
+
+    <div class="nav-buttons">
+      <button onclick="prevMessage()">Back</button>
+      <button onclick="nextMessage()">Next</button>
+    </div>
+
+    <div class="form-section">
+      <h2>APA JAWABANMU?</h2>
+      <textarea id="userMessage" rows="4" placeholder="Your message..."></textarea><br>
+      <button onclick="submitMessage()">Submit</button>
+    </div>
+    
+    <div class="responses" id="responses"></div>
+  </div>
+
+  <script>
+    const stickers = ['awe.jpg', 'hura.gif', 'sebel.gif','style.gif','sebenernya.gif','sakit.gif','ketemu.jpg','ngomong.gif','selfie.jpg','posisi.jpg','shock.gif','pertanyaan.gif','kenal.gif',"dekat.gif",'kamu.jpg','sehatya.jpg','momen.jpg'];
+    const messages = ['Hai Adel !!', 'aku seneng bisa ketemu kamu asyik sama kamu', 'BTW...  AKU BUKAN ORANG YANG JAGO NGOMONG','BUKAN JAGO STYLE','SEBENERNYA','SAKITKU ITU MIKIRN KAMU LO..  HIHI','SEJAK PERTAMA AKU KETEMU KAMU AKU TERTARIK DENGAN KAMU','MAAF YAA ORANG SEPERTI AKU LANCANG NGOMONG GINI','SEJAK SAAT ITU JUGA AKU SUKA SAMA KAMU HMM','BUT... AKU MENGERTI POSISIKU YANG JAUH DARI TIPEMU','JANGAN SHOCK YAA ... SETIDAKNYA AKU BISA NGOMONG INI, KARENA BERAT NGOMONG LANGSUNG HEHEH','DAN PERTANYAANKU TERAKHIR ...','BOLEH NGGA AKU KENAL KAMU LEBIH DALAM','LEBIH DEKAT LAGI :))','AKU AKAN MERINDUKANMU','KAMU SEHAT-SEHAT DIJAKARTA','MAKASIH MOMEN BERHARGA KEMARIN BUAT AKU'];
+    let currentIndex = 0;
+
+    function updateContent() {
+      document.getElementById('sticker').src = stickers[currentIndex];
+      document.getElementById('message').innerText = messages[currentIndex];
+
+      // Show form if on the last message
+      if (currentIndex === messages.length - 1) {
+        document.querySelector('.form-section').style.display = 'block';
+      } else {
+        document.querySelector('.form-section').style.display = 'none';
+      }
+    }
+
+    function nextMessage() {
+      currentIndex = (currentIndex + 1) % stickers.length;
+      updateContent();
+    }
+
+    function prevMessage() {
+      currentIndex = (currentIndex - 1 + stickers.length) % stickers.length;
+      updateContent();
+    }
+
+    function submitMessage() {
+      const userMessage = document.getElementById('userMessage').value;
+      if (userMessage) {
+        const responseDiv = document.createElement('div');
+        responseDiv.className = 'response';
+        responseDiv.innerText = userMessage;
+        document.getElementById('responses').appendChild(responseDiv);
+        document.getElementById('userMessage').value = '';
+      }
+    }
+
+    // Hide form initially
+    document.querySelector('.form-section').style.display = 'none';
+    updateContent();
+  </script>
+
+</body>
+</html>
